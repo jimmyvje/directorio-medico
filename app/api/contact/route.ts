@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-export const runtime = 'edge';
+
 
 
 export async function POST(request: NextRequest) {
@@ -85,3 +85,5 @@ export async function POST(request: NextRequest) {
         );
     }
 }
+
+export const runtime = 'edge';

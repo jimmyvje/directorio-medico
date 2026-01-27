@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { supabase } from '@/lib/supabase';
 import { Consultorio, Perfil, DirectoryListing } from '@/types/database';
 
-export const runtime = 'edge';
+
 
 interface ConsultorioPageProps {
     params: Promise<{ slug: string }>;
@@ -345,3 +345,5 @@ export default async function ConsultorioPage({ params }: ConsultorioPageProps) 
         </div>
     );
 }
+
+export const runtime = 'edge';

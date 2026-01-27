@@ -6,7 +6,7 @@ import { supabase } from '@/lib/supabase';
 import { DirectoryListing } from '@/types/database';
 import AdBanner from '@/components/AdBanner';
 
-export const runtime = 'edge';
+
 
 interface DoctorPageProps {
     params: Promise<{ slug: string }>;
@@ -329,3 +329,5 @@ export default async function DoctorPage({ params }: DoctorPageProps) {
         </div>
     );
 }
+
+export const runtime = 'edge';

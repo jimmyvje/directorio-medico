@@ -6,7 +6,7 @@ import ConsultorioCard from '@/components/ConsultorioCard';
 import AdBanner from '@/components/AdBanner';
 import Pagination from '@/components/Pagination';
 
-export const runtime = 'edge';
+
 
 interface SearchPageProps {
     searchParams: Promise<{
@@ -229,3 +229,5 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
         </div>
     );
 }
+
+export const runtime = 'edge';
