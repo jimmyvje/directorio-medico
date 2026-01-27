@@ -6,6 +6,8 @@ import Script from "next/script";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import { Suspense } from "react";
 
+export const runtime = 'edge';
+
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
