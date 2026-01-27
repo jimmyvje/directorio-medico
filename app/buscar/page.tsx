@@ -1,6 +1,9 @@
 import { Metadata } from 'next';
 import { supabase } from '@/lib/supabase';
 import { Consultorio, SearchIndexItem } from '@/types/database';
+
+export const runtime = 'edge';
+
 import SearchForm from '@/components/SearchForm';
 import ConsultorioCard from '@/components/ConsultorioCard';
 import AdBanner from '@/components/AdBanner';
