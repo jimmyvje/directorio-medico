@@ -9,7 +9,7 @@ try {
         columns: true,
         to: 1 // Only header and first row
     });
-    console.log('Headers (UTF-8):', Object.keys(records[0]));
+    console.log('Headers (UTF-8):', Object.keys(records[0] as any));
 } catch (e) {
     console.error('Error reading UTF-8:', e);
 }
@@ -20,7 +20,7 @@ try {
         columns: true,
         to: 1
     });
-    console.log('Headers (Latin1):', Object.keys(records[0]));
+    console.log('Headers (Latin1):', Object.keys(records[0] as any));
 } catch (e) {
     console.error('Error reading Latin1:', e);
 }

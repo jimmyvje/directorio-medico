@@ -160,7 +160,7 @@ export default function HomePage() {
             Únete a nuestra red de doctores verificados y conecta con más pacientes.
           </p>
           <a
-            href="#"
+            href="/contacto"
             className="
               inline-flex items-center gap-2
               px-8 py-4
