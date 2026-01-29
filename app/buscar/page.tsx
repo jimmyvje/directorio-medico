@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import { supabase } from '@/lib/supabase';
-import { Consultorio, SearchIndexItem } from '@/types/database';
+import { Consultorio, DirectoryListing } from '@/types/database';
 import SearchForm from '@/components/SearchForm';
 import ConsultorioCard from '@/components/ConsultorioCard';
 import AdBanner from '@/components/AdBanner';
@@ -69,15 +69,14 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
         }
     }
 
-    // MAIN QUERY using the SQL VIEW
+    // MAIN QUERY using directory_listings table directly
     let query = supabase
-        .from('search_index')
+        .from('directory_listings')
         .select('*', { count: 'exact' });
 
-    // Apply Filter
-    if (especialidadId) {
-        // La vista devuelve un array de UUIDs en especialidad_ids
-        query = query.contains('especialidad_ids', [especialidadId]);
+    // Apply Filter by especialidad (text search in especialidad field)
+    if (especialidadId && especialidadNombre) {
+        query = query.ilike('especialidad', `%${especialidadNombre}%`);
     }
 
     // Sort: Verified first, then Name
@@ -94,20 +93,21 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
         console.error('Error fetching search results:', error);
     }
 
-    const resultados = (resultadosRaw as SearchIndexItem[] || []).map(item => {
-        // Construir objeto "Consultorio" dummy compatible con ConsultorioCard
+    const resultados = (resultadosRaw as DirectoryListing[] || []).map(item => {
+        // Construir objeto "Consultorio" compatible con ConsultorioCard
         const consultorio: Consultorio = {
             id: item.id,
             nombre: item.nombre,
             slug: item.slug,
             direccion: item.direccion,
-            logo_url: item.logo_url,
+            logo_url: item.foto_url,
             created_at: item.created_at,
             // Defaults placeholders
             duracion_cita_minutos: 30,
             hora_apertura: '09:00',
             hora_cierre: '18:00',
-            telefono: null,
+            telefono: item.telefono,
+            correo: null,
             color_tema: '#0e7490',
             ruc: null,
             tipo_consultorio: 'MEDICINA_GENERAL' // Dummy
@@ -115,7 +115,9 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
 
         return {
             ...item,
-            consultorioObj: consultorio
+            consultorioObj: consultorio,
+            especialidad_label: item.especialidad,
+            doctores_data: []
         };
     });
 
@@ -155,7 +157,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
                                 <div className="grid gap-4 sm:grid-cols-2">
                                     {resultados.map((item) => (
                                         <ConsultorioCard
-                                            key={`${item.source_type}-${item.id}`}
+                                            key={item.id}
                                             consultorio={item.consultorioObj}
                                             doctores={item.doctores_data}
                                             especialidades={[]}

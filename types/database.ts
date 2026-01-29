@@ -18,6 +18,7 @@ export interface Consultorio {
     hora_apertura: string;
     hora_cierre: string;
     telefono: string | null;
+    correo: string | null;
     color_tema: string;
     ruc: string | null;
     slug: string | null;
@@ -65,6 +66,7 @@ export interface SearchIndexItem {
     nombre: string;
     slug: string;
     direccion: string | null;
+    telefono: string | null;
     logo_url: string | null;
     created_at: string;
     is_verified: boolean;
